@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111317">
+  <meta name="description" content="Pick the mainstream apps you used before, show the alternative tools you switched to, and share your pack as an image.">
+  <title>Alternative Pack</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2300ccaa'/%3E%3Cpath transform='translate(4 4)' d='M19 9H6.659c-1.006 0-1.51 0-1.634-.309c-.125-.308.23-.672.941-1.398L8.211 5M5 15h12.341c1.006 0 1.51 0 1.634.309c.125.308-.23.672-.941 1.398L15.789 19' fill='none' stroke='%23111317' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/alternative-pack.css">
+  <script src="js/catalog.js" defer></script>
+  <script src="js/export-image.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <!-- Inline icon set, referenced with <use href="#icon-…"> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M20 12H4M15 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path d="M4 12h16M9 7l-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M8 11H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-2"/></g></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1"/></g></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></g></symbol>
+    <symbol id="icon-reset" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.7"/><path d="M4 4v4.7h4.7"/></g></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <main class="pp-app">
+    <a class="back-link" href="../">
+      <svg class="icon" aria-hidden="true"><use href="#icon-arrow-left"/></svg>
+      All tools
+    </a>
+
+    <header class="pp-hero">
+      <p class="eyebrow">
+        <span class="eyebrow__mark" aria-hidden="true"></span>
+        Generator
+      </p>
+      <h1>Create your <span>Alternative Pack</span></h1>
+      <p class="pp-hero__copy">
+        Pick the mainstream apps you used before, choose up to three alternative tools you switched to, and share your pack as an image.
+      </p>
+    </header>
+
+    <div class="pp-layout">
+      <section class="pp-categories" aria-labelledby="categories-title">
+        <div class="pp-toolbar">
+          <h2 id="categories-title">Categories</h2>
+          <label class="search-field">
+            <span class="sr-only">Filter categories and apps</span>
+            <svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg>
+            <input id="filter-input" type="search" placeholder="Filter categories or apps" autocomplete="off" spellcheck="false">
+          </label>
+        </div>
+        <p id="filter-empty" class="filter-empty" hidden>No category matches your filter.</p>
+        <div id="category-grid" class="category-grid"></div>
+      </section>
+
+      <aside class="pp-sidebar" aria-labelledby="pack-title">
+        <div class="sidebar-card">
+          <div class="sidebar-card__head">
+            <h2 id="pack-title">Your pack</h2>
+            <span id="pack-count" class="count-badge">0 switches</span>
+          </div>
+
+          <div class="preview-frame">
+            <canvas id="preview-canvas" width="600" height="600" role="img" aria-label="Preview of your Alternative Pack image"></canvas>
+          </div>
+
+          <div class="action-row">
+            <button id="share-button" class="btn btn--primary" type="button" disabled>
+              <svg class="icon" aria-hidden="true"><use href="#icon-share"/></svg>
+              Share
+            </button>
+            <button id="download-button" class="btn btn--secondary" type="button" disabled>
+              <svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg>
+              Download PNG
+            </button>
+          </div>
+
+          <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+
+          <button id="reset-button" class="btn-link" type="button" disabled>
+            <svg class="icon" aria-hidden="true"><use href="#icon-reset"/></svg>
+            Reset all picks
+          </button>
+        </div>
+
+        <p class="credits">
+          App catalog and logos from <a href="https://privacypack.org" target="_blank" rel="noopener">PrivacyPack</a> by Ente (<a href="LICENSE-privacypack.txt">MIT</a>).
+        </p>
+        <p class="legal">
+          <span>&copy; 2026 Kai Köhler</span>
+          <a href="https://kai-koehler.com/en/imprint/">Imprint</a>
+        </p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Mobile action bar, hidden on wide screens -->
+  <div class="mobile-bar" id="mobile-bar">
+    <button id="share-button-mobile" class="btn btn--primary" type="button" disabled>
+      <svg class="icon" aria-hidden="true"><use href="#icon-share"/></svg>
+      Share
+    </button>
+    <button id="download-button-mobile" class="btn btn--secondary" type="button" disabled>
+      <svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg>
+      Download
+    </button>
+  </div>
+
+  <template id="category-template">
+    <article class="category-card">
+      <header class="category-card__head">
+        <h3 class="category-card__title"></h3>
+        <span class="count-badge count-badge--muted"></span>
+      </header>
+      <div class="picker-row">
+        <div class="picker" data-kind="main">
+          <button class="picker__trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span class="picker__logos"></span>
+            <span class="picker__name"></span>
+            <svg class="icon picker__chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+          </button>
+        </div>
+        <svg class="icon picker-arrow" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+        <div class="picker" data-kind="alt">
+          <button class="picker__trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span class="picker__logos"></span>
+            <span class="picker__name"></span>
+            <svg class="icon picker__chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+          </button>
+        </div>
+      </div>
+    </article>
+  </template>
+</body>
+</html>

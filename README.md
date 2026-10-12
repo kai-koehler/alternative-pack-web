@@ -1,1 +1,1 @@
-Copy of my website version of Ente Privacy Pack: https://github.com/ente/privacypack
+Vibecoded copy of Ente Privacy Pack for my website: https://github.com/ente/privacypack

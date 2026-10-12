@@ -70,44 +70,9 @@ a { color: inherit; }
   padding: 40px 0 64px;
 }
 
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--caption);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 160ms ease;
-}
-
-.back-link .icon { width: 18px; height: 18px; }
-
-.back-link:hover { color: var(--primary); }
-
 .pp-hero {
   max-width: 760px;
-  margin: clamp(32px, 9vh, 96px) 0 40px;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 16px;
-  color: var(--primary);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.eyebrow__mark {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--primary);
-  box-shadow: 0 0 0 4px rgb(0 204 170 / 18%);
+  margin: 0 0 40px;
 }
 
 .pp-hero h1 {
